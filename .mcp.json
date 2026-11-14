@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "opencrawl": {
+      "type": "http",
+      "url": "https://app.getopencrawl.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${OPENCRAWL_API_KEY}"
+      }
+    },
+    "you": {
+      "type": "http",
+      "url": "https://api.you.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${YOU_API_KEY}"
+      }
+    }
+  }
+}
