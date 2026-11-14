@@ -19,7 +19,7 @@ def _f(name: str, default: float) -> float:
 @dataclass(frozen=True)
 class Settings:
     you_api_key: str = field(default_factory=lambda: os.getenv("YOU_API_KEY", ""))
-    you_search_url: str = field(default_factory=lambda: os.getenv("YOU_SEARCH_URL", "https://api.ydc-index.io/search"))
+    you_search_url: str = field(default_factory=lambda: os.getenv("YOU_SEARCH_URL", "https://ydc-index.io/v1/search"))
     you_contents_url: str = field(default_factory=lambda: os.getenv("YOU_CONTENTS_URL", "https://ydc-index.io/v1/contents"))
     you_research_url: str = field(default_factory=lambda: os.getenv("YOU_RESEARCH_URL", "https://api.you.com/v1/research"))
     opencrawl_url: str = field(default_factory=lambda: os.getenv("OPENCRAWL_MCP_URL", "https://app.getopencrawl.com/mcp"))

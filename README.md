@@ -139,8 +139,8 @@ The dashboard loads with 3 seeded jobs. Priority queue and archive counts show i
 
 ## Known assumptions to verify before relying on this
 
-- The You.com REST endpoints and response shapes (Search, Contents, Research) in `.env.example` should be checked against You.com's current docs.
-- OpenCrawl tool names are discovered at runtime (`python -m backend.tools.opencrawl_client` lists them). The client enables "agent session capture" by passing any boolean capture/trace/record argument the tool exposes; confirm this matches OpenCrawl's real parameter.
+- You.com: the Search (`ydc-index.io/v1/search`), Contents (`ydc-index.io/v1/contents`) and Research (`api.you.com/v1/research`) endpoints and response shapes were checked against You.com's published docs. News articles come back inside `results.web`.
+- **OpenCrawl is the main open question.** The hosted MCP server (`app.getopencrawl.com/mcp`) appears to authenticate with OAuth sign-in (a static bearer token is an alternative for non-interactive setups) and to expose session search, fetch and agent-board tools, not necessarily a general page crawler. The Verifier discovers OpenCrawl's tools at runtime (`python -m backend.tools.opencrawl_client` lists them) and only uses one that takes a URL. If OpenCrawl cannot connect or has no such tool, the Verifier falls back to You.com Contents, and every receipt says so: it is labelled "You.com Contents", never "OpenCrawl Live DOM". On JS-rendered ATS pages (Ashby, Workday) that fallback cannot confirm the Apply button, so `apply_button` is flagged uncertain and Ashby's public API supplies `publishedAt` / `isListed`.
 - The Finder's company/role parsing of aggregator titles is heuristic; ambiguous input is flagged in `uncertain_fields`.
 
 ## Security

@@ -30,6 +30,17 @@ REC_CAUTION = "谨慎投递 / Apply with Caution"
 REC_NO = "不建议投递 / Do Not Apply"
 GHOST_RISK_BELOW = 70  # open but apply_score under this => GHOST_RISK (stale repost, hiring freeze, missing Apply...)
 
+# Evidence that always comes from one engine, whatever fetched the page. Used when no matching receipt exists
+# (e.g. a FinderOutput built without receipts), so a news/mirror step is never mislabelled with the page-fetch engine.
+SIGNAL_ENGINE: dict[str, str] = {
+    "canonical": "You.com",
+    "mirror": "You.com",
+    "news": "You.com",
+    "hiring_research": "You.com",
+    "conflict": "You.com",
+    "ashby_api": "Direct HTTP",
+}
+
 
 def score(
     finder: FinderOutput,
@@ -47,8 +58,9 @@ def score(
 
     def cite(text: str, signal: str, engine: str | None = None) -> CitedClaim:
         r = next((x for x in pool if x.signal == signal), None)
+        eng = r.engine if r else (engine or SIGNAL_ENGINE.get(signal) or default_engine)
         return CitedClaim(claim=text, source_url=str(r.source_url) if r else url,
-                          engine=r.engine if r else (engine or default_engine), signal=signal)  # type: ignore[arg-type]
+                          engine=eng, signal=signal)  # type: ignore[arg-type]
 
     # ---------------------------------------------------------------- open_confidence
     oc = 100
