@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JobTruth verifies whether a job is still open using live web evidence." />
+  <title>JobTruth — Know before you apply</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar shell">
+    <a class="brand" href="#" aria-label="JobTruth home">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span>JOBTRUTH</span>
+    </a>
+    <div class="topbar-right">
+      <div class="live-pill"><span class="live-dot"></span> LIVE WEB</div>
+      <span class="checks"><strong id="verifiedCount">128</strong> jobs verified today</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero shell" id="hero">
+      <div class="eyebrow"><span>✦</span> LIVE JOB INTELLIGENCE</div>
+      <h1>Know before<br />you <em>apply.</em></h1>
+      <p class="hero-copy">Stop spending hours on ghost jobs. We search the live web, cross-check every source, and show you the receipts.</p>
+
+      <form class="search-card" id="verifyForm">
+        <div class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        </div>
+        <input id="jobInput" aria-label="Job URL or search request" value="https://linkedin.com/jobs/view/3928471" placeholder="Paste a job URL or describe what you want…" />
+        <button type="submit">VERIFY JOB <span>↗</span></button>
+      </form>
+
+      <div class="search-options" role="group" aria-label="Search modes">
+        <button class="mode active" data-mode="verify"><span>⌁</span> Verify a job</button>
+        <button class="mode" data-mode="find"><span>⌕</span> Find verified jobs</button>
+        <button class="mode" data-mode="list"><span>▤</span> Check my list</button>
+      </div>
+      <button class="try-query" id="tryQuery">Try: “Entry-level data jobs in NYC posted this week” <span>→</span></button>
+
+      <div class="trust-row">
+        <span><i>✓</i> Live sources</span>
+        <span><i>✓</i> Cross-checked</span>
+        <span><i>✓</i> Every claim cited</span>
+      </div>
+    </section>
+
+    <section class="scanner-section hidden" id="scanner" aria-live="polite">
+      <div class="shell scanner-grid">
+        <div class="scanner-main panel">
+          <div class="section-kicker">AGENT WORKSPACE</div>
+          <div class="scanner-title-row">
+            <div>
+              <p class="muted">Verifying</p>
+              <h2>Acme · Software Engineer</h2>
+            </div>
+            <div class="scan-status"><span></span> AGENTS RUNNING</div>
+          </div>
+
+          <div class="scan-track">
+            <div class="scan-line"></div>
+            <article class="scan-step" data-step="0">
+              <div class="step-node">1</div>
+              <div><h3>Discovering sources</h3><p>Searching official careers pages and job boards</p><div class="step-result">Found canonical company listing</div></div>
+            </article>
+            <article class="scan-step" data-step="1">
+              <div class="step-node">2</div>
+              <div><h3>Checking live status</h3><p>Reading page state and application controls</p><div class="step-result">Apply button detected</div></div>
+            </article>
+            <article class="scan-step" data-step="2">
+              <div class="step-node">3</div>
+              <div><h3>Comparing timestamps</h3><p>Extracting structured data across sources</p><div class="step-result">Official page updated 2 days ago</div></div>
+            </article>
+            <article class="scan-step" data-step="3">
+              <div class="step-node">4</div>
+              <div><h3>Resolving conflict</h3><p>Prioritizing authoritative, recent evidence</p><div class="step-result warning">LinkedIn age conflicts with company site</div></div>
+            </article>
+            <article class="scan-step" data-step="4">
+              <div class="step-node">5</div>
+              <div><h3>Calculating recommendation</h3><p>Scoring availability, recency and competition</p><div class="step-result">Confidence model complete</div></div>
+            </article>
+          </div>
+        </div>
+
+        <aside class="sources panel">
+          <div class="section-kicker">LIVE SOURCES</div>
+          <h3>Evidence stream</h3>
+          <div class="source-list">
+            <div class="source-row" data-source="0"><span class="source-logo company">A</span><div><strong>careers.acme.com</strong><small>Official company</small></div><b>CHECKING</b></div>
+            <div class="source-row" data-source="1"><span class="source-logo greenhouse">g</span><div><strong>greenhouse.io</strong><small>Applicant tracking</small></div><b>QUEUED</b></div>
+            <div class="source-row" data-source="2"><span class="source-logo linkedin">in</span><div><strong>linkedin.com</strong><small>Third-party listing</small></div><b>QUEUED</b></div>
+          </div>
+          <div class="agent-network">
+            <div class="network-line"></div>
+            <span class="agent a1">F</span><span class="agent a2">V</span><span class="agent a3">S</span>
+            <p><strong>3 agents</strong> sharing context via OpenCrawl</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="results hidden" id="results">
+      <div class="shell">
+        <div class="result-header">
+          <div><div class="section-kicker">VERIFICATION COMPLETE</div><h2>Here’s what the live web says.</h2></div>
+          <button class="ghost-button" id="verifyAgain">↻ VERIFY AGAIN</button>
+        </div>
+
+        <div class="result-grid">
+          <article class="verdict-card panel">
+            <div class="company-row">
+              <div class="company-icon">A</div>
+              <div><p>ACME, INC.</p><h3>Software Engineer</h3><span>New York, NY · Hybrid</span></div>
+            </div>
+            <div class="verdict-content">
+              <div class="score-ring" style="--score:94"><div><strong id="scoreNumber">94</strong><small>%</small><span>CONFIDENCE</span></div></div>
+              <div class="verdict-copy"><span class="open-label"><i></i> LIKELY OPEN</span><h4>Strong evidence this role is actively hiring.</h4><p>The official careers page and ATS agree. One older third-party listing conflicts.</p></div>
+            </div>
+            <div class="stats-row">
+              <div><span>APPLY PRIORITY</span><strong class="high">HIGH</strong></div>
+              <div><span>POSTED</span><strong>3 days ago</strong></div>
+              <div><span>APPLICANTS</span><strong>47 <small>reported</small></strong></div>
+              <div><span>LAST VERIFIED</span><strong id="lastVerified">just now</strong></div>
+            </div>
+            <button class="primary-action">APPLY ON OFFICIAL SITE <span>↗</span></button>
+            <p class="demo-note">Illustrative demo result — not a real job listing.</p>
+          </article>
+
+          <article class="score-card panel">
+            <div class="card-heading"><div><div class="section-kicker">WHY THIS SCORE</div><h3>Confidence breakdown</h3></div><span>94 / 100</span></div>
+            <div class="score-list">
+              <div><span class="points positive">+40</span><p><strong>Official page is active</strong><small>careers.acme.com</small></p><i style="--w:100%"></i></div>
+              <div><span class="points positive">+20</span><p><strong>Apply button available</strong><small>Live page control detected</small></p><i style="--w:82%"></i></div>
+              <div><span class="points positive">+15</span><p><strong>Recently posted</strong><small>Within the last 7 days</small></p><i style="--w:68%"></i></div>
+              <div><span class="points positive">+10</span><p><strong>Primary sources agree</strong><small>Official site + ATS</small></p><i style="--w:54%"></i></div>
+              <div><span class="points negative">−6</span><p><strong>Source conflict</strong><small>Older LinkedIn metadata</small></p><i style="--w:26%"></i></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="evidence-block">
+          <div class="evidence-heading"><div><div class="section-kicker">RECEIPTS</div><h3>Every claim has a source.</h3></div><div class="source-count"><strong>3</strong> sources checked live</div></div>
+          <div class="evidence-grid">
+            <article class="evidence-card verified">
+              <div class="evidence-top"><span>✓</span><b>VERIFIED</b><small>12s ago</small></div>
+              <h4>Position is accepting applications</h4>
+              <blockquote>“Apply for this job”</blockquote>
+              <div class="evidence-source"><span class="source-logo company">A</span><div><strong>Acme Careers</strong><small>Official source · Highest authority</small></div><span>↗</span></div>
+            </article>
+            <article class="evidence-card verified">
+              <div class="evidence-top"><span>✓</span><b>VERIFIED</b><small>14s ago</small></div>
+              <h4>Listing was recently updated</h4>
+              <blockquote>“dateModified: 2026-11-12”</blockquote>
+              <div class="evidence-source"><span class="source-logo greenhouse">g</span><div><strong>Greenhouse</strong><small>Structured job data</small></div><span>↗</span></div>
+            </article>
+            <article class="evidence-card conflict">
+              <div class="evidence-top"><span>!</span><b>CONFLICT</b><small>16s ago</small></div>
+              <h4>Third-party listing appears stale</h4>
+              <blockquote>“Posted 30+ days ago”</blockquote>
+              <div class="evidence-source"><span class="source-logo linkedin">in</span><div><strong>LinkedIn</strong><small>Lower authority · Cached metadata</small></div><span>↗</span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="conflict-banner panel">
+          <div class="conflict-icon">!</div>
+          <div><div class="section-kicker amber">SOURCE CONFLICT RESOLVED</div><h3>Official sources take priority.</h3><p>LinkedIn reports an older posting date, but both the employer’s careers page and Greenhouse confirm the role is currently accepting applications.</p></div>
+          <div class="decision"><span>DECISION</span><strong><i></i> LIKELY OPEN</strong><small>Canonical source wins</small></div>
+        </div>
+
+        <div class="timeline panel">
+          <div><div class="section-kicker">JOB TIMELINE</div><h3>What changed, and when.</h3></div>
+          <div class="timeline-track">
+            <div class="timeline-line"></div>
+            <div class="timeline-event done"><span></span><strong>NOV 02</strong><p>Job posted</p></div>
+            <div class="timeline-event done"><span></span><strong>NOV 09</strong><p>First discovered</p></div>
+            <div class="timeline-event done"><span></span><strong>NOV 12</strong><p>Listing updated</p></div>
+            <div class="timeline-event now"><span></span><strong>NOW</strong><p>Verified open</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <span>JOBTRUTH · BUILT FOR GROUND TRUTH 2026</span>
+    <span>Powered by <strong>You.com</strong> + <strong>OpenCrawl</strong></span>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
